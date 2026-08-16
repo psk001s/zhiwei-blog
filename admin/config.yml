@@ -3,7 +3,7 @@ backend:
   name: github
   repo: psk001s/zhiwei-blog
   branch: main
-publish_mode: editorial_workflow
+  auth_methods: [token]
 media_folder: assets/images/uploads
 public_folder: assets/images/uploads
 site_url: https://zhiwei-blog-pang.pages.dev
