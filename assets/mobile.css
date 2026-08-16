@@ -1,0 +1,29 @@
+@media(max-width:760px){
+  .site-header{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));gap:12px}
+  .site-header nav{gap:12px;font-size:13px;white-space:nowrap}
+  .site-header nav a,.site-header nav button{min-height:44px;min-width:36px;padding-inline:6px;display:inline-flex;align-items:center;justify-content:center}
+  .site-header nav a:nth-child(2){display:block}
+  .brand{flex-shrink:0;font-size:20px;min-height:44px;align-items:center}.brand span{display:none}
+  .intro,.archive,.article-layout,.editor-fields,.preview-pane{padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
+  .filters{gap:2px}.filters button{min-height:44px;padding:7px 12px}
+  .article-cover{height:min(68vw,320px)}
+  .article-hero{padding:62px 20px 42px}
+  .article-hero>p:last-of-type{line-height:1.8}
+  .article-stats span{min-height:28px}
+  .prose{font-size:17px;line-height:1.95;overflow-wrap:anywhere}
+  .prose h2{font-size:26px}.prose h3{font-size:21px}
+  .prose blockquote{margin:2em 0;padding:18px 20px;font-size:18px}
+  .about-hero figure{height:auto;aspect-ratio:4/5}
+  .format-bar{overflow-x:auto;scrollbar-width:none}.format-bar::-webkit-scrollbar{display:none}.format-bar button{min-width:44px;height:44px}
+  .primary-button{min-height:44px;padding:9px 14px}
+  .meta-fields{grid-template-columns:1fr;gap:8px}.meta-fields input,.cover-control input{min-height:44px}
+  dialog{width:calc(100vw - 32px);max-width:520px;padding:34px 24px}.dialog-close{width:44px;height:44px;right:4px;top:4px}
+  footer{gap:16px;padding-bottom:max(30px,env(safe-area-inset-bottom));flex-wrap:wrap}
+}
+@media(max-width:360px){
+  .site-header{gap:6px}.site-header nav{gap:2px;font-size:12px}.site-header nav a,.site-header nav button{padding-inline:4px;min-width:34px}.brand{font-size:18px}
+  .intro h1,.about-hero h1{font-size:36px}.article-hero h1{font-size:34px}
+  .intro{padding-top:62px}.section-heading h2,.about h2{font-size:32px}
+  .post-card{grid-template-columns:48px 1fr;gap:14px}.card-body h3{font-size:21px}.card-body>p:last-child{font-size:14px}
+  .article-stats{font-size:12px}
+}

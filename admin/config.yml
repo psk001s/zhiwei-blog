@@ -1,0 +1,58 @@
+locale: zh_Hans
+backend:
+  name: github
+  repo: psk001s/zhiwei-blog
+  branch: main
+publish_mode: editorial_workflow
+media_folder: assets/images/uploads
+public_folder: assets/images/uploads
+site_url: https://zhiwei-blog-pang.pages.dev
+display_url: https://zhiwei-blog-pang.pages.dev
+collections:
+  - name: posts
+    label: 文章
+    label_singular: 文章
+    folder: content/posts
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}} · {{date}}"
+    sortable_fields: [date, title, category]
+    fields:
+      - { label: 标题, name: title, widget: string }
+      - { label: 发布日期, name: date, widget: datetime, date_format: YYYY-MM-DD, time_format: false }
+      - { label: 分类, name: category, widget: select, options: [生活, 阅读, 创造, 随笔] }
+      - { label: 摘要, name: summary, widget: text }
+      - { label: 封面图片, name: cover, widget: image, choose_url: true }
+      - { label: 草稿, name: draft, widget: boolean, default: false, required: false }
+      - { label: 正文, name: body, widget: markdown }
+  - name: settings
+    label: 网站设置
+    files:
+      - label: 品牌与作者
+        name: site
+        file: content/site.yml
+        fields:
+          - { label: 网站名称, name: name, widget: string }
+          - { label: 文字 Logo, name: logoText, widget: string }
+          - { label: Logo 副标, name: logoSubtitle, widget: string, required: false }
+          - { label: Logo 图片, name: logoImage, widget: image, required: false }
+          - { label: 作者名称, name: authorName, widget: string }
+          - { label: 联系邮箱, name: email, widget: string }
+          - { label: 首页 SEO 标题, name: seoTitle, widget: string }
+          - { label: 首页 SEO 描述, name: seoDescription, widget: text }
+          - { label: 导航 · 文章, name: navArticles, widget: string }
+          - { label: 导航 · 关于, name: navAbout, widget: string }
+          - { label: 首页眉题, name: introEyebrow, widget: string }
+          - { label: 首页大标题, name: introTitle, widget: string, hint: 使用竖线分隔换行 }
+          - { label: 首页简介, name: introDescription, widget: text }
+          - { label: 文章区眉题, name: articlesEyebrow, widget: string }
+          - { label: 文章区标题, name: articlesTitle, widget: string }
+          - { label: 关于区标记, name: aboutMark, widget: string, hint: 使用竖线分隔换行 }
+          - { label: 关于区眉题, name: aboutEyebrow, widget: string }
+          - { label: 关于区标题, name: aboutTitle, widget: string }
+          - { label: 关于区简介, name: aboutDescription, widget: text }
+          - { label: 关于区链接文字, name: aboutLinkText, widget: string }
+          - { label: 页脚文字, name: footerText, widget: string }

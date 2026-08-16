@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f3ed"><title>写文章 · 知微</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="stylesheet" href="assets/mobile.css">
+  <script src="assets/editor.js" defer></script>
+</head>
+<body class="editor-page">
+  <header class="site-header"><a class="brand" href="index.html">知微<span>ZHĪ WĒI</span></a><nav><a href="index.html">退出编辑</a><button class="primary-button" id="export-button">导出文章</button></nav></header>
+  <main class="editor-shell">
+    <section class="editor-fields">
+      <div class="editor-toolbar"><p class="eyebrow">新文章</p><span id="save-status">已自动保存草稿</span></div>
+      <input id="title" class="title-input" aria-label="文章标题" placeholder="文章标题" value="在这里写下你的标题">
+      <div class="meta-fields"><input id="category" aria-label="分类" placeholder="分类" value="生活"><input id="summary" aria-label="摘要" placeholder="一句话摘要"></div>
+      <label class="cover-control">封面图片 URL <input id="cover" type="url" placeholder="https://... 或 assets/images/..."></label>
+      <div class="format-bar" aria-label="格式工具栏">
+        <button data-insert="## " title="二级标题">H2</button><button data-wrap="**" title="加粗"><strong>B</strong></button><button data-wrap="*" title="斜体"><em>I</em></button><button data-insert="> " title="引用">❝</button><button data-insert="![图片说明](图片地址)" title="插入图片">图片</button>
+      </div>
+      <textarea id="content" aria-label="Markdown 正文" spellcheck="true">从这里开始写作。
+
+## 一个小标题
+
+正文支持 **Markdown** 格式，也可以插入图片。
+
+> 写作，是把模糊的感受慢慢看清。</textarea>
+    </section>
+    <section class="preview-pane"><p class="eyebrow">实时预览</p><article class="prose" id="preview"></article></section>
+  </main>
+  <dialog id="export-dialog"><button class="dialog-close" aria-label="关闭">×</button><p class="eyebrow">文章已准备好</p><h2>发布文章</h2><p>下载文章文件后，将它和正文图片放入项目，再按 README 的步骤发布。</p><div class="dialog-actions"><button class="primary-button" id="download-button">下载文章文件</button><button id="copy-button">复制文章数据</button></div></dialog>
+</body>
+</html>
