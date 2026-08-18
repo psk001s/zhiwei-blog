@@ -28,10 +28,16 @@ export async function onRequestPost({ request, env }) {
   if (data.action === "comment") {
     const name = String(data.name || "").trim();
     const content = String(data.content || "").trim();
+    const startedAt = Number(data.startedAt || 0);
+    if (String(data.website || "").trim()) return json({ ok: true }, 201);
+    if (!Number.isFinite(startedAt) || Date.now() - startedAt < 3000) return json({ error: "提交过快，请稍后再试" }, 400);
     if (name.length < 1 || name.length > 30) return json({ error: "昵称需为 1 至 30 个字符" }, 400);
     if (content.length < 2 || content.length > 1000) return json({ error: "评论需为 2 至 1000 个字符" }, 400);
+    if ((content.match(/https?:\/\//gi) || []).length > 2) return json({ error: "评论中的链接过多" }, 400);
     const recent = await env.COMMENTS_DB.prepare("SELECT COUNT(*) AS count FROM comments WHERE device_id = ? AND julianday(created_at) > julianday('now', '-1 hour')").bind(data.deviceId).first();
     if (Number(recent?.count || 0) >= 5) return json({ error: "发布较频繁，请稍后再试" }, 429);
+    const duplicate = await env.COMMENTS_DB.prepare("SELECT id FROM comments WHERE device_id = ? AND content = ? AND julianday(created_at) > julianday('now', '-1 day') LIMIT 1").bind(data.deviceId, content).first();
+    if (duplicate) return json({ error: "请不要重复发布相同评论" }, 409);
     await env.COMMENTS_DB.prepare("INSERT INTO comments (slug, name, content, device_id) VALUES (?, ?, ?, ?)").bind(data.slug, name, content, data.deviceId).run();
     return json({ ok: true }, 201);
   }

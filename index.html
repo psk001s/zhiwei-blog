@@ -20,7 +20,7 @@
   <link rel="alternate" type="application/rss+xml" title="知微 RSS" href="feed.xml">
   <script src="assets/generated-posts.js" defer></script><script src="assets/posts.js" defer></script>
   <script src="assets/site-config.js" defer></script><script src="assets/settings.js" defer></script>
-  <script src="assets/app.js" defer></script>
+  <script src="assets/app.js?v=4" defer></script>
 </head>
 <body>
   <header class="site-header">
@@ -47,6 +47,10 @@
           <h2>近期书写</h2>
         </div>
         <div class="filters" id="filters" aria-label="文章分类"></div>
+      </div>
+      <div class="article-tools">
+        <label><span>搜索文章</span><input id="article-search" type="search" placeholder="输入标题、摘要或标签" autocomplete="off"></label>
+        <label><span>按月份归档</span><select id="archive-filter"></select></label>
       </div>
       <div class="article-grid" id="article-grid"></div>
       <p class="empty-state" id="empty-state" hidden>这个分类里还没有文章。</p>

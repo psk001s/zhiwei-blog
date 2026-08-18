@@ -32,7 +32,9 @@ if (existsSync(sourceDir)) {
     const { data, body } = frontmatter(await readFile(path.join(sourceDir, file), "utf8"));
     if (data.draft === true) continue;
     const date = String(data.date || file.slice(0, 10)).slice(0, 10);
-    posts.push({ slug: file.replace(/\.md$/, ""), title: data.title, category: data.category || "随笔", date, readTime: `${Math.max(1, Math.ceil(body.length / 500))} 分钟`, summary: data.summary || "", cover: data.cover || "assets/images/walk.jpg", content: markdown(body) });
+    const category = data.category || "随笔";
+    const tags = String(data.tags || category).split(/[,，|]/).map(tag => tag.trim()).filter(Boolean);
+    posts.push({ slug: file.replace(/\.md$/, ""), title: data.title, category, tags, date, readTime: `${Math.max(1, Math.ceil(body.length / 500))} 分钟`, summary: data.summary || "", cover: data.cover || "assets/images/walk.jpg", content: markdown(body) });
   }
 }
 posts.sort((a, b) => b.date.localeCompare(a.date));

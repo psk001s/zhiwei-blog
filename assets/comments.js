@@ -15,6 +15,7 @@
   const likeButton = root.querySelector("[data-article-like]");
   const likeCount = root.querySelector("[data-article-like-count]");
   const time = new Intl.DateTimeFormat("zh-CN", { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" });
+  let commentStartedAt = Date.now();
 
   async function request(payload) {
     const response = await fetch("/api/comments", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ slug, deviceId, ...payload }) });
@@ -70,8 +71,9 @@
     message.textContent = "正在发布...";
     const values = new FormData(form);
     try {
-      await request({ action: "comment", name: values.get("name"), content: values.get("content") });
+      await request({ action: "comment", name: values.get("name"), content: values.get("content"), website: values.get("website"), startedAt: commentStartedAt });
       form.elements.content.value = "";
+      commentStartedAt = Date.now();
       message.textContent = "评论已发布。";
       await load();
     } catch (error) { message.textContent = error.message; }
