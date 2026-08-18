@@ -3,8 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const about = window.ABOUT_CONFIG || {};
   const friendLinks = window.FRIEND_LINKS_CONFIG || {};
   document.querySelectorAll(".brand").forEach(brand => {
-    brand.setAttribute("aria-label", `${config.name || "知微"}首页`);
-    brand.innerHTML = config.logoImage ? `<img class="brand-image" src="${config.logoImage}" alt="${config.name || "网站 Logo"}">` : `${config.logoText || config.name || "知微"}<span>${config.logoSubtitle || ""}</span>`;
+    brand.setAttribute("aria-label", `${config.name || "庞胜凯的个人博客"}首页`);
+    brand.innerHTML = config.logoImage ? `<img class="brand-image" src="${config.logoImage}" alt="${config.name || "网站 Logo"}">` : `${config.logoText || config.name || "庞胜凯"}<span>${config.logoSubtitle || ""}</span>`;
   });
   document.querySelectorAll('a[href^="mailto:"]').forEach(link => { if (config.email) { link.href = `mailto:${config.email}`; link.textContent = `${config.email} →`; } });
   const setText = (selector, value) => { if (value) document.querySelectorAll(selector).forEach(element => { element.textContent = value; }); };
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const aboutParagraph = document.querySelector(".about p:last-child");
   if (aboutParagraph) { const aboutLink = document.createElement("a"); aboutLink.className = "about-more"; aboutLink.href = "about.html"; aboutLink.textContent = config.aboutLinkText || "继续了解我 →"; aboutParagraph.append(" ", aboutLink); }
   setText("footer p:last-child", config.footerText);
-  document.querySelectorAll("footer p:first-child").forEach(element => { element.textContent = `© ${new Date().getFullYear()} ${config.name || "知微"}`; });
+  document.querySelectorAll("footer p:first-child").forEach(element => { element.textContent = `© ${new Date().getFullYear()} ${config.name || "庞胜凯的个人博客"}`; });
   if (config.seoTitle && document.body.querySelector(".intro")) { document.title = config.seoTitle; document.querySelectorAll('meta[property="og:title"]').forEach(element => { element.content = config.seoTitle; }); }
   if (config.seoDescription && document.body.querySelector(".intro")) {
     document.querySelectorAll('meta[name="description"],meta[property="og:description"]').forEach(element => { element.content = config.seoDescription; });
