@@ -1,1 +1,23 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>内容管理 · 知微</title></head><body><script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>内容管理 · 知微</title>
+  <link rel="stylesheet" href="../assets/admin-shell.css">
+</head>
+<body>
+  <nav class="admin-tools" aria-label="网站管理">
+    <span>网站管理后台</span>
+    <a href="comments.html" data-comment-admin-link>评论管理</a>
+  </nav>
+  <script>
+    document.querySelector("[data-comment-admin-link]").addEventListener("click", event => {
+      event.stopImmediatePropagation();
+      window.location.assign(event.currentTarget.href);
+    }, true);
+  </script>
+  <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+</body>
+</html>
