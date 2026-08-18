@@ -50,7 +50,7 @@ const articleTemplate = await readFile(articleTemplateFile, "utf8");
 const articlePages = {};
 for (const post of posts) {
   const page = articleTemplate
-    .replace("</head>", '<base href="../"></head>')
+    .replace("<head>", '<head>\n  <base href="../">')
     .replace("<title>文章 · 知微</title>", `<title>${escape(post.title)} · 知微</title>`)
     .replace('<body class="article-page">', `<body class="article-page" data-post-slug="${escapeAttribute(post.slug)}">`)
     .replace('<meta name="robots"', `<meta name="description" content="${escapeAttribute(post.summary)}"><meta name="robots"`)
