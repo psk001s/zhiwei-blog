@@ -53,4 +53,8 @@ if (existsSync("content/about.yml")) {
   }
   await writeFile("assets/about-config.js", `window.ABOUT_CONFIG = ${JSON.stringify(about, null, 2)};\n`);
 }
+if (existsSync("content/friend-links.json")) {
+  const friendLinks = JSON.parse(await readFile("content/friend-links.json", "utf8"));
+  await writeFile("assets/friend-links-config.js", `window.FRIEND_LINKS_CONFIG = ${JSON.stringify(friendLinks, null, 2)};\n`);
+}
 console.log(`Built ${posts.length} managed post(s).`);

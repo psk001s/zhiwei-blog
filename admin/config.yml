@@ -76,3 +76,20 @@ collections:
           - { label: 联系区标题, name: contactTitle, widget: string }
           - { label: 联系区说明, name: contactDescription, widget: text }
           - { label: 联系邮箱, name: email, widget: string }
+  - name: friend_links
+    label: 友情链接
+    format: json
+    files:
+      - label: 友情链接设置
+        name: links
+        file: content/friend-links.json
+        fields:
+          - { label: 区域标题, name: title, widget: string, default: 友情链接 }
+          - label: 链接列表
+            name: links
+            widget: list
+            required: false
+            summary: "{{fields.name}} · {{fields.url}}"
+            fields:
+              - { label: 网站名称, name: name, widget: string }
+              - { label: 网站地址, name: url, widget: string, hint: "请填写完整地址，例如 https://example.com" }

@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const config = window.SITE_CONFIG || {};
   const about = window.ABOUT_CONFIG || {};
+  const friendLinks = window.FRIEND_LINKS_CONFIG || {};
   document.querySelectorAll(".brand").forEach(brand => {
     brand.setAttribute("aria-label", `${config.name || "知微"}首页`);
     brand.innerHTML = config.logoImage ? `<img class="brand-image" src="${config.logoImage}" alt="${config.name || "网站 Logo"}">` : `${config.logoText || config.name || "知微"}<span>${config.logoSubtitle || ""}</span>`;
@@ -45,5 +46,20 @@ document.addEventListener("DOMContentLoaded", () => {
     if (about.seoTitle) document.title = about.seoTitle;
     if (about.seoDescription) document.querySelectorAll('meta[name="description"],meta[property="og:description"]').forEach(element => { element.content = about.seoDescription; });
     if (about.seoTitle) document.querySelectorAll('meta[property="og:title"]').forEach(element => { element.content = about.seoTitle; });
+  }
+  const friendLinksSection = document.querySelector("[data-friend-links]");
+  const friendLinksList = document.querySelector("[data-friend-links-list]");
+  if (friendLinksSection && friendLinksList && Array.isArray(friendLinks.links) && friendLinks.links.length) {
+    const title = friendLinksSection.querySelector("[data-friend-links-title]");
+    if (title && friendLinks.title) title.textContent = friendLinks.title;
+    friendLinksList.replaceChildren(...friendLinks.links.map(item => {
+      const link = document.createElement("a");
+      link.href = item.url;
+      link.textContent = item.name;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      return link;
+    }));
+    friendLinksSection.hidden = false;
   }
 });
