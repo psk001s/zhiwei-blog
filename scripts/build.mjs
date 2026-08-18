@@ -31,13 +31,14 @@ function markdown(source) {
 
 const posts = [];
 if (existsSync(sourceDir)) {
-  for (const file of (await readdir(sourceDir)).filter(name => name.endsWith(".md"))) {
+  const files = (await readdir(sourceDir)).filter(name => name.endsWith(".md")).sort((a, b) => a.localeCompare(b, "zh-CN"));
+  for (const file of files) {
     const { data, body } = frontmatter(await readFile(path.join(sourceDir, file), "utf8"));
     if (data.draft === true) continue;
     const date = String(data.date || file.slice(0, 10)).slice(0, 10);
     const category = data.category || "随笔";
     const tags = String(data.tags || category).split(/[,，|]/).map(tag => tag.trim()).filter(Boolean);
-    const slug = file.replace(/\.md$/, "");
+    const slug = String(posts.length + 1);
     posts.push({ slug, url: `posts/${encodeURIComponent(slug)}.html`, title: data.title, category, tags, date, readTime: `${Math.max(1, Math.ceil(body.length / 500))} 分钟`, summary: data.summary || "", cover: data.cover || "", content: markdown(body) });
   }
 }
