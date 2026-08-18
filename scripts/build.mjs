@@ -1,11 +1,11 @@
-import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
+import { readdir, readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
 
 const sourceDir = path.resolve("content/posts");
 const outputFile = path.resolve("assets/generated-posts.js");
 const articleTemplateFile = path.resolve("article.html");
-const articleOutputDir = path.resolve("posts");
+const articlePagesModule = path.resolve("functions/_lib/generated-post-pages.js");
 
 function frontmatter(source) {
   const match = source.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
@@ -45,8 +45,7 @@ posts.sort((a, b) => b.date.localeCompare(a.date));
 await writeFile(outputFile, `window.GENERATED_POSTS = ${JSON.stringify(posts, null, 2)};\n`);
 
 const articleTemplate = await readFile(articleTemplateFile, "utf8");
-await rm(articleOutputDir, { recursive: true, force: true });
-await mkdir(articleOutputDir, { recursive: true });
+const articlePages = {};
 for (const post of posts) {
   const page = articleTemplate
     .replace("</head>", '<base href="../"></head>')
@@ -54,8 +53,9 @@ for (const post of posts) {
     .replace('<body class="article-page">', `<body class="article-page" data-post-slug="${escapeAttribute(post.slug)}">`)
     .replace('<meta name="robots"', `<meta name="description" content="${escapeAttribute(post.summary)}"><meta name="robots"`)
     .replace('<meta property="og:type"', `<meta property="og:title" content="${escapeAttribute(post.title)}"><meta property="og:description" content="${escapeAttribute(post.summary)}"><meta property="og:type"`);
-  await writeFile(path.join(articleOutputDir, `${post.slug}.html`), page);
+  articlePages[`${post.slug}.html`] = page;
 }
+await writeFile(articlePagesModule, `export const ARTICLE_PAGES = ${JSON.stringify(articlePages, null, 2)};\n`);
 if (existsSync("content/site.yml")) {
   const site = {};
   for (const line of (await readFile("content/site.yml", "utf8")).split(/\r?\n/)) {
