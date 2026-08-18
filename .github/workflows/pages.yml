@@ -1,34 +1,31 @@
-name: Deploy blog
+name: Deploy blog to Cloudflare
 on:
   push:
     branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
-  pages: write
-  id-token: write
 concurrency:
-  group: pages
+  group: cloudflare-pages
   cancel-in-progress: true
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: node scripts/build.mjs
-      - run: node scripts/prepare-deploy.mjs
+      - name: Build managed content and SEO files
+        run: |
+          node scripts/build.mjs
+          node scripts/prepare-deploy.mjs
         env:
-          SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+          SITE_URL: https://zhiwei-blog-pang.pages.dev
           GITHUB_REPOSITORY: ${{ github.repository }}
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
         with:
-          path: .
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: 59d90f49b428eab0d0dad11740f97169
+          command: pages deploy . --project-name=zhiwei-blog-pang --branch=main --commit-dirty=true
