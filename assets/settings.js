@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const config = window.SITE_CONFIG || {};
+  const about = window.ABOUT_CONFIG || {};
   document.querySelectorAll(".brand").forEach(brand => {
     brand.setAttribute("aria-label", `${config.name || "知微"}首页`);
     brand.innerHTML = config.logoImage ? `<img class="brand-image" src="${config.logoImage}" alt="${config.name || "网站 Logo"}">` : `${config.logoText || config.name || "知微"}<span>${config.logoSubtitle || ""}</span>`;
@@ -25,5 +26,24 @@ document.addEventListener("DOMContentLoaded", () => {
   if (config.seoTitle && document.body.querySelector(".intro")) { document.title = config.seoTitle; document.querySelectorAll('meta[property="og:title"]').forEach(element => { element.content = config.seoTitle; }); }
   if (config.seoDescription && document.body.querySelector(".intro")) {
     document.querySelectorAll('meta[name="description"],meta[property="og:description"]').forEach(element => { element.content = config.seoDescription; });
+  }
+  if (document.body.querySelector(".about-page")) {
+    document.querySelectorAll("[data-about]").forEach(element => {
+      const value = about[element.dataset.about];
+      if (!value) return;
+      if (element.dataset.about === "title") {
+        element.replaceChildren(...value.split("|").flatMap((part, index) => index ? [document.createElement("br"), part] : [part]));
+      } else element.textContent = value;
+    });
+    const image = document.querySelector("[data-about-image]");
+    if (image && about.image) image.src = about.image;
+    if (image && about.imageAlt) image.alt = about.imageAlt;
+    const interests = document.querySelector("[data-about-interests]");
+    if (interests && about.interests) interests.replaceChildren(...about.interests.split("|").map(value => Object.assign(document.createElement("span"), { textContent: value })));
+    const email = document.querySelector("[data-about-email]");
+    if (email && about.email) { email.href = `mailto:${about.email}`; email.textContent = `${about.email} →`; }
+    if (about.seoTitle) document.title = about.seoTitle;
+    if (about.seoDescription) document.querySelectorAll('meta[name="description"],meta[property="og:description"]').forEach(element => { element.content = about.seoDescription; });
+    if (about.seoTitle) document.querySelectorAll('meta[property="og:title"]').forEach(element => { element.content = about.seoTitle; });
   }
 });

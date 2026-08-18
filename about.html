@@ -10,11 +10,11 @@
 <body>
   <header class="site-header"><a class="brand" href="index.html">知微<span>ZHĪ WĒI</span></a><nav><a href="index.html">文章</a><a class="active" href="about.html">关于</a></nav></header>
   <main class="about-page">
-    <header class="about-hero"><div><p class="eyebrow">关于我</p><h1>你好，我是<br>知微的书写者。</h1><p>一个持续学习如何生活，也持续学习如何把感受写清楚的人。</p></div><figure><img src="assets/images/about.jpg" alt="窗边桌上的书与咖啡"></figure></header>
-    <section class="about-story"><p class="story-index">01</p><div><h2>这个博客为何存在</h2><p>我相信，认真观察日常，本身就是一种创造。这里不是履历表，也不追赶每一个热点。我写阅读留下的痕迹，生活教会我的事，以及那些还没有标准答案的问题。</p><p>文章更新得不算频繁。比起速度，我更在意一篇文字是否诚实，是否经得起过一阵子再回头看。</p></div></section>
-    <section class="about-story"><p class="story-index">02</p><div><h2>我关心的事</h2><div class="interest-list"><span>阅读与写作</span><span>安静的生活</span><span>设计与创造</span><span>人与技术</span></div></div></section>
-    <section class="about-contact"><p class="eyebrow">保持联系</p><h2>谢谢你来到这里。</h2><p>如果某篇文章让你有所共鸣，欢迎写信告诉我。</p><a href="mailto:hello@example.com">hello@example.com →</a></section>
+    <header class="about-hero"><div><p class="eyebrow" data-about="eyebrow">关于我</p><h1 data-about="title">你好，我是<br>知微的书写者。</h1><p data-about="bio">一个持续学习如何生活，也持续学习如何把感受写清楚的人。</p></div><figure><img data-about-image src="assets/images/about.jpg" alt="窗边桌上的书与咖啡"></figure></header>
+    <section class="about-story"><p class="story-index">01</p><div><h2 data-about="storyTitle">这个博客为何存在</h2><p data-about="storyParagraph1">我相信，认真观察日常，本身就是一种创造。这里不是履历表，也不追赶每一个热点。我写阅读留下的痕迹，生活教会我的事，以及那些还没有标准答案的问题。</p><p data-about="storyParagraph2">文章更新得不算频繁。比起速度，我更在意一篇文字是否诚实，是否经得起过一阵子再回头看。</p></div></section>
+    <section class="about-story"><p class="story-index">02</p><div><h2 data-about="interestsTitle">我关心的事</h2><div class="interest-list" data-about-interests><span>阅读与写作</span><span>安静的生活</span><span>设计与创造</span><span>人与技术</span></div></div></section>
+    <section class="about-contact"><p class="eyebrow" data-about="contactEyebrow">保持联系</p><h2 data-about="contactTitle">谢谢你来到这里。</h2><p data-about="contactDescription">如果某篇文章让你有所共鸣，欢迎写信告诉我。</p><a data-about-email href="mailto:hello@example.com">hello@example.com →</a></section>
   </main>
   <footer><p>© <span id="year"></span> 知微</p><a href="index.html">回到文章</a></footer>
-  <script src="assets/site-config.js"></script><script src="assets/settings.js"></script><script>document.querySelector("#year").textContent=new Date().getFullYear()</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"知微","description":"知微个人博客作者","knowsAbout":["阅读","写作","生活","设计"]}</script>
+  <script src="assets/site-config.js"></script><script src="assets/about-config.js"></script><script src="assets/settings.js"></script><script>document.querySelector("#year").textContent=new Date().getFullYear()</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"知微","description":"知微个人博客作者","knowsAbout":["阅读","写作","生活","设计"]}</script>
 </body></html>

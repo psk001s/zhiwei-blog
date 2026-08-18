@@ -1,0 +1,18 @@
+window.ABOUT_CONFIG = {
+  "seoTitle": "关于我 · 庞胜凯",
+  "seoDescription": "认识庞胜凯，以及这个博客为何存在。",
+  "eyebrow": "关于我",
+  "title": "你好，我是|庞胜凯。",
+  "bio": "一个持续学习如何生活，也持续学习如何把感受写清楚的人。",
+  "image": "/assets/images/about.jpg",
+  "imageAlt": "窗边桌上的书与咖啡",
+  "storyTitle": "这个博客为何存在",
+  "storyParagraph1": "我相信，认真观察日常，本身就是一种创造。这里不是履历表，也不追赶每一个热点。我写阅读留下的痕迹，生活教会我的事，以及那些还没有标准答案的问题。",
+  "storyParagraph2": "文章更新得不算频繁。比起速度，我更在意一篇文字是否诚实，是否经得起过一阵子再回头看。",
+  "interestsTitle": "我关心的事",
+  "interests": "阅读与写作|安静的生活|设计与创造|人与技术",
+  "contactEyebrow": "保持联系",
+  "contactTitle": "谢谢你来到这里。",
+  "contactDescription": "如果某篇文章让你有所共鸣，欢迎写信告诉我。",
+  "email": "10063384@qq.com"
+};

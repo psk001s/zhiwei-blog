@@ -56,3 +56,23 @@ collections:
           - { label: 关于区简介, name: aboutDescription, widget: text }
           - { label: 关于区链接文字, name: aboutLinkText, widget: string }
           - { label: 页脚文字, name: footerText, widget: string }
+      - label: 关于我页面
+        name: about
+        file: content/about.yml
+        fields:
+          - { label: 页面 SEO 标题, name: seoTitle, widget: string }
+          - { label: 页面 SEO 描述, name: seoDescription, widget: text }
+          - { label: 眉题, name: eyebrow, widget: string }
+          - { label: 主标题, name: title, widget: string, hint: 使用竖线分隔换行 }
+          - { label: 个人简介, name: bio, widget: text }
+          - { label: 个人图片, name: image, widget: image }
+          - { label: 图片说明, name: imageAlt, widget: string }
+          - { label: 第一部分标题, name: storyTitle, widget: string }
+          - { label: 第一部分正文一, name: storyParagraph1, widget: text }
+          - { label: 第一部分正文二, name: storyParagraph2, widget: text }
+          - { label: 兴趣部分标题, name: interestsTitle, widget: string }
+          - { label: 兴趣标签, name: interests, widget: string, hint: 使用竖线分隔多个标签 }
+          - { label: 联系区眉题, name: contactEyebrow, widget: string }
+          - { label: 联系区标题, name: contactTitle, widget: string }
+          - { label: 联系区说明, name: contactDescription, widget: text }
+          - { label: 联系邮箱, name: email, widget: string }

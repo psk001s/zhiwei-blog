@@ -45,4 +45,12 @@ if (existsSync("content/site.yml")) {
   }
   await writeFile("assets/site-config.js", `window.SITE_CONFIG = ${JSON.stringify(site, null, 2)};\n`);
 }
+if (existsSync("content/about.yml")) {
+  const about = {};
+  for (const line of (await readFile("content/about.yml", "utf8")).split(/\r?\n/)) {
+    const field = line.match(/^([\w-]+):\s*(.*)$/); if (!field) continue;
+    about[field[1]] = field[2].trim().replace(/^['"]|['"]$/g, "");
+  }
+  await writeFile("assets/about-config.js", `window.ABOUT_CONFIG = ${JSON.stringify(about, null, 2)};\n`);
+}
 console.log(`Built ${posts.length} managed post(s).`);
