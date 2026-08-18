@@ -44,9 +44,23 @@ function renderArticle() {
   const canonical = document.createElement("link"); canonical.rel = "canonical"; canonical.href = location.href.split("#")[0]; document.head.append(canonical);
   const structured = document.createElement("script"); structured.type = "application/ld+json";
   structured.textContent = JSON.stringify({"@context":"https://schema.org","@type":"BlogPosting",headline:post.title,description:post.summary,datePublished:post.date,image:new URL(post.cover, location.href).href,author:{"@type":"Person",name:"知微"},inLanguage:"zh-CN"}); document.head.append(structured);
-  root.innerHTML = `<article><header class="article-hero"><p class="post-meta"><span>${post.category}</span></p><h1>${post.title}</h1><p>${post.summary}</p><div class="article-stats"><span>发布于 ${formatDate(post.date)}</span><span><i data-lucide="eye" aria-hidden="true"></i><b id="view-count">--</b> 次浏览</span><span>${post.readTime}阅读</span></div></header><div class="article-cover"><img src="${post.cover}" alt="${post.title}"></div><div class="article-layout"><aside><span>分享文章</span><button id="copy-link" title="复制文章链接" aria-label="复制文章链接">⌁</button></aside><div class="prose">${post.content}</div></div><section class="article-reactions" data-comment-system data-slug="${post.slug}"><button class="article-like" data-article-like type="button"><i data-lucide="heart" aria-hidden="true"></i><span>喜欢这篇文章</span><b data-article-like-count>0</b></button><div class="comments"><header><p class="eyebrow">读者评论</p><h2>留下你的想法</h2></header><form data-comment-form><label>昵称<input name="name" maxlength="30" autocomplete="nickname" required></label><label>评论<textarea name="content" minlength="2" maxlength="1000" rows="4" required></textarea></label><div><p data-comment-message role="status"></p><button class="comment-submit" type="submit">发布评论</button></div></form><div class="comment-list" data-comment-list><p class="comment-empty">正在加载评论...</p></div></div></section><nav class="article-end"><p>感谢读到这里</p><a href="index.html">继续读下一篇 →</a></nav></article>`;
+  root.innerHTML = `<article><header class="article-hero"><p class="post-meta"><span>${post.category}</span></p><h1>${post.title}</h1><p>${post.summary}</p><div class="article-stats"><span>发布于 ${formatDate(post.date)}</span><span><i data-lucide="eye" aria-hidden="true"></i><b id="view-count">--</b> 次浏览</span><span>${post.readTime}阅读</span></div></header><div class="article-cover"><img src="${post.cover}" alt="${post.title}"></div><div class="article-layout"><aside><span>分享文章</span><button id="copy-link" title="复制文章链接" aria-label="复制文章链接"><i data-lucide="link" aria-hidden="true"></i></button></aside><div class="prose">${post.content}</div></div><section class="article-reactions" data-comment-system data-slug="${post.slug}"><div class="article-action-row"><button class="article-like" data-article-like type="button"><i data-lucide="heart" aria-hidden="true"></i><span>喜欢这篇文章</span><b data-article-like-count>0</b></button><button class="article-share" id="share-article" type="button"><i data-lucide="share-2" aria-hidden="true"></i><span>转发文章</span></button></div><p class="share-message" id="share-message" role="status"></p><div class="comments"><header><p class="eyebrow">读者评论</p><h2>留下你的想法</h2></header><form data-comment-form><label>昵称<input name="name" maxlength="30" autocomplete="nickname" required></label><label>评论<textarea name="content" minlength="2" maxlength="1000" rows="4" required></textarea></label><div><p data-comment-message role="status"></p><button class="comment-submit" type="submit">发布评论</button></div></form><div class="comment-list" data-comment-list><p class="comment-empty">正在加载评论...</p></div></div></section><nav class="article-end"><p>感谢读到这里</p><a href="index.html">继续读下一篇 →</a></nav></article>`;
   document.querySelector("#copy-link")?.addEventListener("click", async event => {
-    await navigator.clipboard.writeText(location.href); event.currentTarget.textContent = "✓";
+    await navigator.clipboard.writeText(location.href); event.currentTarget.innerHTML = '<i data-lucide="check" aria-hidden="true"></i>'; window.lucide?.createIcons();
+  });
+  document.querySelector("#share-article")?.addEventListener("click", async () => {
+    const message = document.querySelector("#share-message");
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: post.title, text: post.summary, url: location.href });
+        message.textContent = "已打开转发菜单。";
+      } else {
+        await navigator.clipboard.writeText(location.href);
+        message.textContent = "文章链接已复制。";
+      }
+    } catch (error) {
+      if (error.name !== "AbortError") message.textContent = "转发失败，请稍后重试。";
+    }
   });
   if (window.lucide) window.lucide.createIcons();
   updateViews(post.slug);
