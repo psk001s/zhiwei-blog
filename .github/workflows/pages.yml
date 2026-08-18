@@ -21,7 +21,7 @@ jobs:
           node scripts/build.mjs
           node scripts/prepare-deploy.mjs
         env:
-          SITE_URL: https://zhiwei-blog-pang.pages.dev
+          SITE_URL: https://www.shengkai.cc
           GITHUB_REPOSITORY: ${{ github.repository }}
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3

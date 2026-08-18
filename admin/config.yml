@@ -6,8 +6,8 @@ backend:
   auth_methods: [token]
 media_folder: assets/images/uploads
 public_folder: assets/images/uploads
-site_url: https://zhiwei-blog-pang.pages.dev
-display_url: https://zhiwei-blog-pang.pages.dev
+site_url: https://www.shengkai.cc
+display_url: https://www.shengkai.cc
 collections:
   - name: posts
     label: 文章
