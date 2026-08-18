@@ -2,7 +2,9 @@ import { ARTICLE_PAGES } from "../_lib/generated-post-pages.js";
 
 export async function onRequestGet(context) {
   const value = context.params.path;
-  const filename = Array.isArray(value) ? value.join("/") : value;
+  const encodedFilename = Array.isArray(value) ? value.join("/") : value;
+  let filename = encodedFilename;
+  try { filename = decodeURIComponent(encodedFilename); } catch {}
   const page = ARTICLE_PAGES[filename];
   if (!page) return new Response("Not Found", { status: 404 });
 
