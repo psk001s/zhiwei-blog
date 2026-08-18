@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>评论管理</title>
+  <link rel="stylesheet" href="../assets/styles.css">
+  <link rel="stylesheet" href="../assets/comment-admin.css">
+</head>
+<body class="comment-admin-page">
+  <header><a class="brand" href="../index.html">评论管理</a><a href="./">返回内容后台</a></header>
+  <main>
+    <section class="comment-login" data-admin-login>
+      <p class="eyebrow">管理员验证</p>
+      <h1>管理读者评论</h1>
+      <form><label>管理密码<input name="password" type="password" autocomplete="current-password" required></label><button type="submit">进入评论管理</button></form>
+      <p data-admin-message role="status"></p>
+    </section>
+    <section class="comment-dashboard" data-admin-dashboard hidden>
+      <div><p class="eyebrow">最新评论</p><h1>评论列表</h1><button type="button" data-admin-logout>退出</button></div>
+      <p data-admin-message role="status"></p>
+      <div class="admin-comment-list" data-admin-comment-list></div>
+    </section>
+  </main>
+  <script src="../assets/comment-admin.js"></script>
+</body>
+</html>
