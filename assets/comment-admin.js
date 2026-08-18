@@ -27,7 +27,7 @@
     content.textContent = comment.content;
     const footer = document.createElement("div");
     const link = document.createElement("a");
-    link.href = `../article.html?slug=${encodeURIComponent(comment.slug)}`;
+    link.href = `../posts/${encodeURIComponent(comment.slug)}.html`;
     link.textContent = comment.slug;
     link.target = "_blank";
     const remove = document.createElement("button");

@@ -1,9 +1,11 @@
-import { readdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
 
 const sourceDir = path.resolve("content/posts");
 const outputFile = path.resolve("assets/generated-posts.js");
+const articleTemplateFile = path.resolve("article.html");
+const articleOutputDir = path.resolve("posts");
 
 function frontmatter(source) {
   const match = source.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
@@ -18,6 +20,7 @@ function frontmatter(source) {
 }
 
 const escape = text => text.replace(/[&<>]/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[char]);
+const escapeAttribute = text => escape(String(text)).replace(/"/g, "&quot;");
 function markdown(source) {
   return escape(source).replace(/^### (.*)$/gm, "<h3>$1</h3>").replace(/^## (.*)$/gm, "<h2>$1</h2>")
     .replace(/^> (.*)$/gm, "<blockquote>$1</blockquote>")
@@ -34,11 +37,25 @@ if (existsSync(sourceDir)) {
     const date = String(data.date || file.slice(0, 10)).slice(0, 10);
     const category = data.category || "随笔";
     const tags = String(data.tags || category).split(/[,，|]/).map(tag => tag.trim()).filter(Boolean);
-    posts.push({ slug: file.replace(/\.md$/, ""), title: data.title, category, tags, date, readTime: `${Math.max(1, Math.ceil(body.length / 500))} 分钟`, summary: data.summary || "", cover: data.cover || "assets/images/walk.jpg", content: markdown(body) });
+    const slug = file.replace(/\.md$/, "");
+    posts.push({ slug, url: `posts/${encodeURIComponent(slug)}.html`, title: data.title, category, tags, date, readTime: `${Math.max(1, Math.ceil(body.length / 500))} 分钟`, summary: data.summary || "", cover: data.cover || "", content: markdown(body) });
   }
 }
 posts.sort((a, b) => b.date.localeCompare(a.date));
 await writeFile(outputFile, `window.GENERATED_POSTS = ${JSON.stringify(posts, null, 2)};\n`);
+
+const articleTemplate = await readFile(articleTemplateFile, "utf8");
+await rm(articleOutputDir, { recursive: true, force: true });
+await mkdir(articleOutputDir, { recursive: true });
+for (const post of posts) {
+  const page = articleTemplate
+    .replace("</head>", '<base href="../"></head>')
+    .replace("<title>文章 · 知微</title>", `<title>${escape(post.title)} · 知微</title>`)
+    .replace('<body class="article-page">', `<body class="article-page" data-post-slug="${escapeAttribute(post.slug)}">`)
+    .replace('<meta name="robots"', `<meta name="description" content="${escapeAttribute(post.summary)}"><meta name="robots"`)
+    .replace('<meta property="og:type"', `<meta property="og:title" content="${escapeAttribute(post.title)}"><meta property="og:description" content="${escapeAttribute(post.summary)}"><meta property="og:type"`);
+  await writeFile(path.join(articleOutputDir, `${post.slug}.html`), page);
+}
 if (existsSync("content/site.yml")) {
   const site = {};
   for (const line of (await readFile("content/site.yml", "utf8")).split(/\r?\n/)) {
