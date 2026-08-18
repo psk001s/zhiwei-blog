@@ -39,7 +39,8 @@ if (existsSync(sourceDir)) {
     const category = data.category || "随笔";
     const tags = String(data.tags || category).split(/[,，|]/).map(tag => tag.trim()).filter(Boolean);
     const slug = String(posts.length + 1);
-    posts.push({ slug, url: `posts/${encodeURIComponent(slug)}.html`, title: data.title, category, tags, date, readTime: `${Math.max(1, Math.ceil(body.length / 500))} 分钟`, summary: data.summary || "", cover: data.cover || "", content: markdown(body) });
+    const legacySlug = file.replace(/\.md$/, "");
+    posts.push({ slug, legacySlug, url: `posts/${slug}.html`, title: data.title, category, tags, date, readTime: `${Math.max(1, Math.ceil(body.length / 500))} 分钟`, summary: data.summary || "", cover: data.cover || "", content: markdown(body) });
   }
 }
 posts.sort((a, b) => b.date.localeCompare(a.date));
@@ -55,6 +56,7 @@ for (const post of posts) {
     .replace('<meta name="robots"', `<meta name="description" content="${escapeAttribute(post.summary)}"><meta name="robots"`)
     .replace('<meta property="og:type"', `<meta property="og:title" content="${escapeAttribute(post.title)}"><meta property="og:description" content="${escapeAttribute(post.summary)}"><meta property="og:type"`);
   articlePages[`${post.slug}.html`] = page;
+  articlePages[`${post.legacySlug}.html`] = page;
 }
 await writeFile(articlePagesModule, `export const ARTICLE_PAGES = ${JSON.stringify(articlePages, null, 2)};\n`);
 if (existsSync("content/site.yml")) {

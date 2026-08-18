@@ -48,7 +48,7 @@ function renderArticle() {
   const root = document.querySelector("#article-root");
   if (!root) return;
   const slug = document.body.dataset.postSlug || new URLSearchParams(location.search).get("slug");
-  const post = posts.find(item => item.slug === slug) || posts[0];
+  const post = posts.find(item => item.slug === slug || item.legacySlug === slug) || posts[0];
   if (!post) return;
   document.title = `${post.title} · 知微`;
   const meta = (property, content) => {

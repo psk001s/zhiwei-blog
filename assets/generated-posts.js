@@ -1,6 +1,7 @@
 window.GENERATED_POSTS = [
   {
     "slug": "1",
+    "legacySlug": "2026-08-18-8.18-号，我的博客诞生了",
     "url": "posts/1.html",
     "title": "8.18 号，我的博客诞生了",
     "category": "随笔",
