@@ -1,15 +1,12 @@
 (() => {
-  const login = document.querySelector("[data-admin-login]");
   const dashboard = document.querySelector("[data-admin-dashboard]");
   const list = document.querySelector("[data-admin-comment-list]");
   const messages = document.querySelectorAll("[data-admin-message]");
-  const key = "zhiwei-comment-admin";
   const time = new Intl.DateTimeFormat("zh-CN", { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" });
 
   const showMessage = value => messages.forEach(element => { element.textContent = value; });
-  const authorization = () => `Basic ${sessionStorage.getItem(key) || ""}`;
   async function api(path = "", options = {}) {
-    const response = await fetch(`/api/admin/comments${path}`, { ...options, headers: { authorization: authorization(), ...options.headers } });
+    const response = await fetch(`/api/admin/comments${path}`, options);
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || "操作失败");
     return data;
@@ -44,24 +41,10 @@
 
   async function load() {
     const data = await api();
-    login.hidden = true;
     dashboard.hidden = false;
     list.replaceChildren(...(data.comments.length ? data.comments.map(commentNode) : [Object.assign(document.createElement("p"), { className: "admin-empty", textContent: "目前没有评论。" })]));
     showMessage("");
   }
 
-  login.querySelector("form").addEventListener("submit", async event => {
-    event.preventDefault();
-    const password = new FormData(event.currentTarget).get("password");
-    sessionStorage.setItem(key, btoa(`admin:${password}`));
-    try { await load(); } catch (error) { sessionStorage.removeItem(key); showMessage(error.message); }
-  });
-
-  document.querySelector("[data-admin-logout]").addEventListener("click", () => {
-    sessionStorage.removeItem(key);
-    dashboard.hidden = true;
-    login.hidden = false;
-  });
-
-  if (sessionStorage.getItem(key)) load().catch(() => sessionStorage.removeItem(key));
+  load().catch(error => showMessage(error.message));
 })();

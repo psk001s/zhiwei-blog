@@ -8,15 +8,29 @@
   <link rel="stylesheet" href="../assets/admin-shell.css">
 </head>
 <body>
-  <nav class="admin-tools" aria-label="网站管理">
-    <span>网站管理后台</span>
-    <a href="comments.html" data-comment-admin-link>评论管理</a>
-  </nav>
   <script>
-    document.querySelector("[data-comment-admin-link]").addEventListener("click", event => {
-      event.stopImmediatePropagation();
-      window.location.assign(event.currentTarget.href);
-    }, true);
+    const addCommentManagementLink = () => {
+      if (document.querySelector("[data-comment-admin-link]")) return true;
+      const settings = [...document.querySelectorAll("a, button")].find(element => element.textContent.trim() === "网站设置");
+      if (!settings) return false;
+      const row = settings.closest("li") || settings.parentElement;
+      const link = document.createElement("a");
+      link.href = "comments.html";
+      link.dataset.commentAdminLink = "";
+      link.textContent = "评论管理";
+      link.addEventListener("click", event => {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        window.location.assign(link.href);
+      }, true);
+      const linkRow = row.cloneNode(false);
+      linkRow.classList.add("comment-admin-nav-row");
+      linkRow.append(link);
+      row.after(linkRow);
+      return true;
+    };
+    const observer = new MutationObserver(addCommentManagementLink);
+    observer.observe(document.documentElement, { childList: true, subtree: true });
   </script>
   <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
 </body>
