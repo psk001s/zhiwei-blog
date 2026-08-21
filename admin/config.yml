@@ -17,15 +17,15 @@ collections:
     delete: true
     extension: md
     format: frontmatter
+    editor:
+      preview: false
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     summary: "{{title}} · {{date}}"
     sortable_fields: [date, title, category]
     fields:
       - { label: 标题, name: title, widget: string }
-      - { label: 发布日期, name: date, widget: datetime, date_format: YYYY-MM-DD, time_format: false }
+      - { label: 发布日期, name: date, widget: datetime, default: "{{now}}", date_format: YYYY-MM-DD, time_format: false }
       - { label: 分类, name: category, widget: string, default: 随笔, hint: 可直接输入已有分类或创建新分类 }
-      - { label: 标签, name: tags, widget: string, required: false, hint: 使用逗号分隔多个标签 }
-      - { label: 摘要, name: summary, widget: text, required: false }
       - { label: 封面图片, name: cover, widget: image, choose_url: true, required: false }
       - { label: 草稿, name: draft, widget: boolean, default: false, required: false }
       - { label: 正文, name: body, widget: markdown }

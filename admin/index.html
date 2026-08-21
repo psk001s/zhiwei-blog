@@ -12,8 +12,19 @@
     const redirectCommentAdmin = () => {
       if (location.hash.includes("comment_admin")) location.replace("comments.html");
     };
+    const simplifyPostEditor = () => {
+      const editingPost = location.hash.includes("/posts/") || location.hash.includes("posts/new");
+      document.body.classList.toggle("post-editor-active", editingPost);
+      if (!editingPost) return;
+      document.querySelectorAll("a, button").forEach(control => {
+        if (["预览", "历史"].includes(control.textContent.trim())) control.hidden = true;
+      });
+    };
     addEventListener("hashchange", redirectCommentAdmin);
+    addEventListener("hashchange", simplifyPostEditor);
     redirectCommentAdmin();
+    simplifyPostEditor();
+    new MutationObserver(simplifyPostEditor).observe(document.documentElement, { childList: true, subtree: true });
     document.addEventListener("click", event => {
       const control = event.target.closest("a, button");
       if (control?.textContent.includes("评论管理")) {

@@ -1,0 +1,6 @@
+.post-editor-active textarea,
+.post-editor-active [contenteditable="true"],
+.post-editor-active .cm-editor,
+.post-editor-active .CodeMirror {
+  min-height: clamp(420px, 65vh, 760px) !important;
+}
