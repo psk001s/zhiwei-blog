@@ -76,12 +76,20 @@ if (existsSync("content/about.yml")) {
   }
   await writeFile("assets/about-config.js", `window.ABOUT_CONFIG = ${JSON.stringify(about, null, 2)};\n`);
   if (existsSync(aboutPageFile) && about.image) {
-    const aboutPage = await readFile(aboutPageFile, "utf8");
+    let aboutPage = await readFile(aboutPageFile, "utf8");
     const imageAlt = about.imageAlt || "关于我";
-    await writeFile(aboutPageFile, aboutPage.replace(
+    aboutPage = aboutPage.replace(
       /(<img\s+data-about-image\s+src=")[^"]*("\s+alt=")[^"]*(")/,
       `$1${escapeAttribute(about.image)}$2${escapeAttribute(imageAlt)}$3`
-    ));
+    );
+    if (about.wechatQr) {
+      const wechatAlt = about.wechatQrAlt || "微信二维码";
+      aboutPage = aboutPage.replace(
+        /(<img\s+data-about-wechat\s+src=")[^"]*("\s+alt=")[^"]*(")/,
+        `$1${escapeAttribute(about.wechatQr)}$2${escapeAttribute(wechatAlt)}$3`
+      );
+    }
+    await writeFile(aboutPageFile, aboutPage);
   }
 }
 if (existsSync("content/friend-links.json")) {

@@ -14,5 +14,7 @@ window.ABOUT_CONFIG = {
   "contactEyebrow": "保持联系",
   "contactTitle": "谢谢你来到这里。",
   "contactDescription": "如果某篇文章让你有所共鸣，欢迎写信告诉我。",
+  "wechatQr": "/assets/images/uploads/wechat-qr.jpg",
+  "wechatQrAlt": "微信二维码",
   "email": "10063384@qq.com"
 };

@@ -43,6 +43,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (interests && about.interests) interests.replaceChildren(...about.interests.split("|").map(value => Object.assign(document.createElement("span"), { textContent: value })));
     const email = document.querySelector("[data-about-email]");
     if (email && about.email) { email.href = `mailto:${about.email}`; email.textContent = `${about.email} →`; }
+    const wechat = document.querySelector("[data-about-wechat]");
+    if (wechat && about.wechatQr) wechat.src = about.wechatQr;
+    if (wechat && about.wechatQrAlt) wechat.alt = about.wechatQrAlt;
+    if (wechat) wechat.closest("figure").hidden = !about.wechatQr;
     if (about.seoTitle) document.title = about.seoTitle;
     if (about.seoDescription) document.querySelectorAll('meta[name="description"],meta[property="og:description"]').forEach(element => { element.content = about.seoDescription; });
     if (about.seoTitle) document.querySelectorAll('meta[property="og:title"]').forEach(element => { element.content = about.seoTitle; });

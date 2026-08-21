@@ -76,6 +76,8 @@ collections:
           - { label: 联系区眉题, name: contactEyebrow, widget: string }
           - { label: 联系区标题, name: contactTitle, widget: string }
           - { label: 联系区说明, name: contactDescription, widget: text }
+          - { label: 微信二维码, name: wechatQr, widget: image, required: false }
+          - { label: 二维码说明, name: wechatQrAlt, widget: string, required: false }
           - { label: 联系邮箱, name: email, widget: string }
   - name: friend_links
     label: 友情链接
