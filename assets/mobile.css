@@ -18,9 +18,6 @@
     align-items: center;
     justify-content: center;
   }
-  .site-header nav a:nth-child(2) {
-    display: inline-flex;
-  }
   .brand {
     flex-shrink: 0;
     font-size: 20px;

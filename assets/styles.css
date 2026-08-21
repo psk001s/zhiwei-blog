@@ -493,9 +493,6 @@ dialog::backdrop {
   .site-header nav {
     gap: 18px;
   }
-  .site-header nav a:nth-child(2) {
-    display: none;
-  }
   .intro {
     padding: 75px 20px 65px;
     display: block;
