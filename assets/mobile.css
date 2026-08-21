@@ -19,7 +19,7 @@
     justify-content: center;
   }
   .site-header nav a:nth-child(2) {
-    display: block;
+    display: inline-flex;
   }
   .brand {
     flex-shrink: 0;
