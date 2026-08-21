@@ -126,6 +126,22 @@ function renderArticle() {
   document.head.append(structured);
   root.innerHTML = `<article><header class="article-hero"><p class="post-meta"><span>${post.category}</span></p><h1>${post.title}</h1>${post.summary ? `<p>${post.summary}</p>` : ""}<div class="article-stats"><span>发布于 ${formatDate(post.date)}</span><span><i data-lucide="eye" aria-hidden="true"></i><b id="view-count">--</b> 次浏览</span><span>${post.readTime}阅读</span></div></header><div class="article-layout"><aside><span>分享文章</span><button id="copy-link" title="复制文章链接" aria-label="复制文章链接"><i data-lucide="link" aria-hidden="true"></i></button></aside><div class="prose">${post.content}</div></div><section class="article-reactions" data-comment-system data-slug="${post.slug}"><div class="article-action-row"><button class="article-like" data-article-like type="button"><i data-lucide="heart" aria-hidden="true"></i><span>喜欢这篇文章</span><b data-article-like-count>0</b></button><button class="article-share" id="share-article" type="button"><i data-lucide="share-2" aria-hidden="true"></i><span>转发文章</span></button></div><p class="share-message" id="share-message" role="status"></p><div class="comments"><header><p class="eyebrow">读者评论</p><h2>留下你的想法</h2></header><form data-comment-form><label>昵称<input name="name" maxlength="30" autocomplete="nickname" required></label><label>评论<textarea name="content" minlength="2" maxlength="1000" rows="4" required></textarea></label><label class="comment-trap" aria-hidden="true">网站<input name="website" tabindex="-1" autocomplete="off"></label><div><p data-comment-message role="status"></p><button class="comment-submit" type="submit">发布评论</button></div></form><div class="comment-list" data-comment-list><p class="comment-empty">正在加载评论...</p></div></div></section><nav class="article-end"><p>感谢读到这里</p><a href="index.html">继续读下一篇 →</a></nav></article>`;
   root.querySelector(".article-hero .post-meta")?.remove();
+  root.querySelectorAll(".article-stats span").forEach(element => {
+    if (element.textContent.includes("阅读")) element.remove();
+  });
+  const related = document.createElement("nav");
+  related.className = "related-posts";
+  related.setAttribute("aria-label", "文章列表");
+  const relatedTitle = document.createElement("strong");
+  relatedTitle.textContent = "文章列表";
+  related.append(relatedTitle, ...posts.map(item => {
+    const link = document.createElement("a");
+    link.href = item.url || `posts/${encodeURIComponent(item.slug)}.html`;
+    link.textContent = item.title;
+    if (item.slug === post.slug) link.setAttribute("aria-current", "page");
+    return link;
+  }));
+  root.querySelector(".article-layout")?.append(related);
   document
     .querySelector("#copy-link")
     ?.addEventListener("click", async (event) => {

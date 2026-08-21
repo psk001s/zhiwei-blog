@@ -288,10 +288,11 @@ footer {
   padding: 0 32px;
 }
 .article-layout {
-  max-width: 940px;
+  max-width: 1180px;
   margin: 38px auto 80px;
   display: grid;
-  grid-template-columns: 100px 1fr;
+  grid-template-columns: 80px minmax(0, 740px) minmax(180px, 230px);
+  gap: 30px;
   padding: 0 32px;
 }
 .article-layout aside {
@@ -310,6 +311,30 @@ footer {
   height: 34px;
   border: 1px solid var(--line);
   font-size: 20px;
+}
+.related-posts {
+  position: sticky;
+  top: 32px;
+  align-self: start;
+  display: grid;
+  gap: 0;
+  padding-left: 24px;
+  border-left: 1px solid var(--line);
+}
+.related-posts strong {
+  margin-bottom: 12px;
+  font: 600 15px/1.5 var(--serif);
+}
+.related-posts a {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.related-posts a:hover,
+.related-posts a[aria-current="page"] {
+  color: var(--ink);
 }
 .prose {
   font: 500 18px/2 var(--serif);
@@ -560,6 +585,13 @@ dialog::backdrop {
   }
   .article-layout aside {
     display: none;
+  }
+  .related-posts {
+    position: static;
+    margin-top: 48px;
+    padding: 28px 0 0;
+    border-top: 1px solid var(--line);
+    border-left: 0;
   }
   .prose figure {
     margin: 2.2em 0;
