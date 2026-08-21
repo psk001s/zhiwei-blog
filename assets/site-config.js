@@ -7,6 +7,7 @@ window.SITE_CONFIG = {
   "email": "10063384@qq.com",
   "seoTitle": "庞胜凯 · 个人博客",
   "seoDescription": "记录关于流量、项目以及生活中的点点滴滴",
+  "navHome": "首页",
   "navArticles": "文章",
   "navAbout": "关于我",
   "introEyebrow": "一处缓慢生长的文字角落",

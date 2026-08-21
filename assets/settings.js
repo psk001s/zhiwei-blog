@@ -9,8 +9,9 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll('a[href^="mailto:"]').forEach(link => { if (config.email) { link.href = `mailto:${config.email}`; link.textContent = `${config.email} →`; } });
   const setText = (selector, value) => { if (value) document.querySelectorAll(selector).forEach(element => { element.textContent = value; }); };
   const setBreaks = (selector, value) => { if (value) document.querySelectorAll(selector).forEach(element => { element.replaceChildren(...value.split("|").flatMap((part, index) => index ? [document.createElement("br"), part] : [part])); }); };
-  setText('header nav a[href*="index"]', config.navArticles);
-  setText('header nav a[href*="about"]', config.navAbout);
+  setText("[data-nav-home]", config.navHome);
+  setText("[data-nav-articles]", config.navArticles);
+  setText("[data-nav-about]", config.navAbout);
   setText(".intro .eyebrow", config.introEyebrow);
   setBreaks(".intro h1", config.introTitle);
   setText(".intro-copy", config.introDescription);
