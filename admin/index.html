@@ -9,28 +9,14 @@
 </head>
 <body>
   <script>
-    const addCommentManagementLink = () => {
-      if (document.querySelector("[data-comment-admin-link]")) return true;
-      const settings = [...document.querySelectorAll("a, button")].find(element => element.textContent.trim() === "网站设置");
-      if (!settings) return false;
-      const row = settings.closest("li") || settings.parentElement;
-      const link = document.createElement("a");
-      link.href = "comments.html";
-      link.dataset.commentAdminLink = "";
-      link.textContent = "评论管理";
-      link.addEventListener("click", event => {
+    document.addEventListener("click", event => {
+      const control = event.target.closest("a, button");
+      if (control?.textContent.trim() === "评论管理") {
         event.preventDefault();
         event.stopImmediatePropagation();
-        window.location.assign(link.href);
-      }, true);
-      const linkRow = row.cloneNode(false);
-      linkRow.classList.add("comment-admin-nav-row");
-      linkRow.append(link);
-      row.after(linkRow);
-      return true;
-    };
-    const observer = new MutationObserver(addCommentManagementLink);
-    observer.observe(document.documentElement, { childList: true, subtree: true });
+        window.location.assign("comments.html");
+      }
+    }, true);
   </script>
   <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
 </body>

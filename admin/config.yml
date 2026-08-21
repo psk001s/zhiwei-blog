@@ -80,6 +80,14 @@ collections:
           - { label: 微信二维码, name: wechatQr, widget: image, required: false }
           - { label: 二维码说明, name: wechatQrAlt, widget: string, required: false }
           - { label: 联系邮箱, name: email, widget: string }
+  - name: comment_admin
+    label: 评论管理
+    files:
+      - label: 评论管理
+        name: comments
+        file: content/comment-admin.yml
+        fields:
+          - { label: 说明, name: note, widget: string, required: false }
   - name: friend_links
     label: 友情链接
     format: json
