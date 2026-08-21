@@ -6,6 +6,7 @@ const sourceDir = path.resolve("content/posts");
 const outputFile = path.resolve("assets/generated-posts.js");
 const articleTemplateFile = path.resolve("article.html");
 const articlePagesModule = path.resolve("functions/_lib/generated-post-pages.js");
+const aboutPageFile = path.resolve("about.html");
 
 function frontmatter(source) {
   const match = source.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
@@ -74,6 +75,14 @@ if (existsSync("content/about.yml")) {
     about[field[1]] = field[2].trim().replace(/^['"]|['"]$/g, "");
   }
   await writeFile("assets/about-config.js", `window.ABOUT_CONFIG = ${JSON.stringify(about, null, 2)};\n`);
+  if (existsSync(aboutPageFile) && about.image) {
+    const aboutPage = await readFile(aboutPageFile, "utf8");
+    const imageAlt = about.imageAlt || "关于我";
+    await writeFile(aboutPageFile, aboutPage.replace(
+      /(<img\s+data-about-image\s+src=")[^"]*("\s+alt=")[^"]*(")/,
+      `$1${escapeAttribute(about.image)}$2${escapeAttribute(imageAlt)}$3`
+    ));
+  }
 }
 if (existsSync("content/friend-links.json")) {
   const friendLinks = JSON.parse(await readFile("content/friend-links.json", "utf8"));
