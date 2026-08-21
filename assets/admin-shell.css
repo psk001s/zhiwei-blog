@@ -4,3 +4,25 @@
 .post-editor-active .CodeMirror {
   min-height: clamp(420px, 65vh, 760px) !important;
 }
+
+.field[data-key-path="body"] .field-wrapper,
+.field[data-key-path="body"] .markdown,
+.field[data-key-path="body"] textarea,
+.field[data-key-path="body"] [contenteditable="true"],
+[data-key-path="body"] .cm-editor,
+[data-key-path="body"] .CodeMirror {
+  min-height: clamp(520px, 72vh, 900px) !important;
+}
+
+.field[data-key-path="cover"] .field-wrapper,
+.field[data-key-path="cover"] .image {
+  min-height: 0 !important;
+  padding-block: 6px !important;
+}
+
+.field[data-key-path="cover"] img {
+  width: auto !important;
+  max-width: 220px !important;
+  max-height: 120px !important;
+  object-fit: contain !important;
+}
