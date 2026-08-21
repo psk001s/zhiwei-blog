@@ -9,9 +9,14 @@
 </head>
 <body>
   <script>
+    const redirectCommentAdmin = () => {
+      if (location.hash.includes("comment_admin")) location.replace("comments.html");
+    };
+    addEventListener("hashchange", redirectCommentAdmin);
+    redirectCommentAdmin();
     document.addEventListener("click", event => {
       const control = event.target.closest("a, button");
-      if (control?.textContent.trim() === "评论管理") {
+      if (control?.textContent.includes("评论管理")) {
         event.preventDefault();
         event.stopImmediatePropagation();
         window.location.assign("comments.html");

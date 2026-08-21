@@ -24,8 +24,8 @@
     content.textContent = comment.content;
     const footer = document.createElement("div");
     const link = document.createElement("a");
-    link.href = `../posts/${encodeURIComponent(comment.slug)}.html`;
-    link.textContent = comment.slug;
+    link.href = `/posts/${encodeURIComponent(comment.slug)}.html`;
+    link.textContent = `查看文章：${comment.slug}`;
     link.target = "_blank";
     const remove = document.createElement("button");
     remove.type = "button";
