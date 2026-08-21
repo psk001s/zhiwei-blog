@@ -24,11 +24,11 @@ collections:
     sortable_fields: [date, title, category]
     fields:
       - { label: 标题, name: title, widget: string }
+      - { label: 正文, name: body, widget: markdown }
       - { label: 发布日期, name: date, widget: datetime, default: "{{now}}", date_format: YYYY-MM-DD, time_format: false }
       - { label: 分类, name: category, widget: string, default: 随笔, hint: 可直接输入已有分类或创建新分类 }
       - { label: 封面图片, name: cover, widget: image, choose_url: true, required: false }
       - { label: 草稿, name: draft, widget: boolean, default: false, required: false }
-      - { label: 正文, name: body, widget: markdown }
   - name: settings
     label: 网站设置
     files:
