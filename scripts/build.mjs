@@ -3,7 +3,9 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 
 const sourceDir = path.resolve("content/posts");
+const momentsDir = path.resolve("content/moments");
 const outputFile = path.resolve("assets/generated-posts.js");
+const momentsOutputFile = path.resolve("assets/generated-moments.js");
 const articleTemplateFile = path.resolve("article.html");
 const articlePagesModule = path.resolve("functions/_lib/generated-post-pages.js");
 const aboutPageFile = path.resolve("about.html");
@@ -12,10 +14,24 @@ function frontmatter(source) {
   const match = source.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
   if (!match) throw new Error("文章缺少 YAML frontmatter");
   const data = {};
-  for (const line of match[1].split(/\r?\n/)) {
-    const field = line.match(/^([\w-]+):\s*(.*)$/); if (!field) continue;
+  let listKey = "";
+  const lines = match[1].split(/\r?\n/);
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+    const field = line.match(/^([\w-]+):\s*(.*)$/);
+    if (!field) {
+      const item = listKey && line.match(/^\s*-\s*(?:[\w-]+:\s*)?(.*)$/);
+      if (item) data[listKey].push(item[1].trim().replace(/^['"]|['"]$/g, ""));
+      continue;
+    }
     let value = field[2].trim().replace(/^['"]|['"]$/g, "");
-    data[field[1]] = value === "true" ? true : value === "false" ? false : value;
+    if (!value && /^\s*-\s+/.test(lines[index + 1] || "")) {
+      listKey = field[1];
+      data[listKey] = [];
+    } else {
+      listKey = "";
+      data[field[1]] = value === "true" ? true : value === "false" ? false : value;
+    }
   }
   return { data, body: match[2] };
 }
@@ -46,6 +62,24 @@ if (existsSync(sourceDir)) {
 }
 posts.sort((a, b) => b.date.localeCompare(a.date));
 await writeFile(outputFile, `window.GENERATED_POSTS = ${JSON.stringify(posts, null, 2)};\n`);
+
+const moments = [];
+if (existsSync(momentsDir)) {
+  const files = (await readdir(momentsDir)).filter(name => name.endsWith(".md"));
+  for (const file of files) {
+    const { data, body } = frontmatter(await readFile(path.join(momentsDir, file), "utf8"));
+    if (data.draft === true) continue;
+    moments.push({
+      id: file.replace(/\.md$/, ""),
+      date: data.date || file.slice(0, 16),
+      location: data.location || "",
+      images: Array.isArray(data.images) ? data.images.filter(Boolean) : [],
+      content: markdown(body)
+    });
+  }
+}
+moments.sort((a, b) => String(b.date).localeCompare(String(a.date)));
+await writeFile(momentsOutputFile, `window.BLOG_MOMENTS = ${JSON.stringify(moments, null, 2)};\n`);
 
 const articleTemplate = await readFile(articleTemplateFile, "utf8");
 const articlePages = {};
@@ -96,4 +130,4 @@ if (existsSync("content/friend-links.json")) {
   const friendLinks = JSON.parse(await readFile("content/friend-links.json", "utf8"));
   await writeFile("assets/friend-links-config.js", `window.FRIEND_LINKS_CONFIG = ${JSON.stringify(friendLinks, null, 2)};\n`);
 }
-console.log(`Built ${posts.length} managed post(s).`);
+console.log(`Built ${posts.length} post(s) and ${moments.length} moment(s).`);

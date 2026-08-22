@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setText("[data-nav-home]", config.navHome);
   setText("[data-nav-articles]", config.navArticles);
   setText("[data-nav-about]", config.navAbout);
+  setText("[data-nav-moments]", config.navMoments);
   setText(".intro .eyebrow", config.introEyebrow);
   setBreaks(".intro h1", config.introTitle);
   setText(".intro-copy", config.introDescription);

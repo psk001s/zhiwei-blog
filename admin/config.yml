@@ -29,6 +29,29 @@ collections:
       - { label: 分类, name: category, widget: string, default: 随笔, hint: 可直接输入已有分类或创建新分类 }
       - { label: 封面图片, name: cover, widget: image, choose_url: true, required: false }
       - { label: 草稿, name: draft, widget: boolean, default: false, required: false }
+  - name: moments
+    label: 朋友圈
+    label_singular: 朋友圈
+    folder: content/moments
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    editor:
+      preview: false
+    slug: "{{year}}-{{month}}-{{day}}-{{hour}}{{minute}}{{second}}"
+    summary: "{{date}} · {{body}}"
+    sortable_fields: [date]
+    fields:
+      - { label: 内容, name: body, widget: markdown }
+      - { label: 发布时间, name: date, widget: datetime, default: "{{now}}", date_format: YYYY-MM-DD, time_format: "HH:mm" }
+      - { label: 位置, name: location, widget: string, required: false }
+      - label: 图片
+        name: images
+        widget: list
+        required: false
+        field: { label: 图片, name: image, widget: image }
+      - { label: 草稿, name: draft, widget: boolean, default: false, required: false }
   - name: settings
     label: 网站设置
     files:
@@ -47,6 +70,7 @@ collections:
           - { label: 导航 · 首页, name: navHome, widget: string }
           - { label: 导航 · 文章, name: navArticles, widget: string }
           - { label: 导航 · 关于, name: navAbout, widget: string }
+          - { label: 导航 · 朋友圈, name: navMoments, widget: string }
           - { label: 首页眉题, name: introEyebrow, widget: string }
           - { label: 首页大标题, name: introTitle, widget: string, hint: 使用竖线分隔换行 }
           - { label: 首页简介, name: introDescription, widget: text }
