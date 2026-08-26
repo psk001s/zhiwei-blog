@@ -43,7 +43,8 @@ function markdown(source) {
     .replace(/^> (.*)$/gm, "<blockquote>$1</blockquote>")
     .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<figure><img src="$2" alt="$1" loading="lazy"><figcaption>$1</figcaption></figure>')
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>').replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/\*(.+?)\*/g, "<em>$1</em>")
-    .split(/\n{2,}/).map(block => /^<(h[23]|blockquote|figure)/.test(block) ? block : `<p>${block.replace(/\n/g, "<br>")}</p>`).join("");
+    .split(/\n{2,}/).map(block => block.trim()).filter(Boolean)
+    .map(block => /^<(h[23]|blockquote|figure)/.test(block) ? block : `<p>${block.replace(/\n/g, "<br>")}</p>`).join("");
 }
 
 const posts = [];

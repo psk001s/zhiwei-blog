@@ -366,17 +366,25 @@ footer {
   font-size: 21px;
 }
 .prose figure {
-  margin: 2.5em -70px;
+  margin: 2.5em 0;
 }
 .prose figure img {
+  display: block;
+  width: auto;
+  max-width: 100%;
   height: auto;
-  max-height: 600px;
+  max-height: none;
+  margin: 0 auto;
+  object-fit: contain;
 }
 .prose figcaption {
   text-align: center;
   color: var(--muted);
   font: 13px var(--sans);
   margin-top: 10px;
+}
+.prose figcaption:empty {
+  display: none;
 }
 .article-end {
   max-width: 740px;
