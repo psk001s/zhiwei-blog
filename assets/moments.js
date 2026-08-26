@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
         link.rel = "noopener";
         const image = document.createElement("img");
         image.src = source;
-        image.alt = `随笔图片 ${index + 1}`;
+        image.alt = `朋友圈图片 ${index + 1}`;
         image.loading = "lazy";
         link.append(image);
         return link;
