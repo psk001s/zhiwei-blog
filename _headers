@@ -3,3 +3,6 @@
 
 /assets/generated-posts.js
   Cache-Control: no-cache, no-store, must-revalidate
+
+/assets/site-config.js
+  Cache-Control: no-cache, no-store, must-revalidate
