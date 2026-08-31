@@ -24,8 +24,9 @@
     content.textContent = comment.content;
     const footer = document.createElement("div");
     const link = document.createElement("a");
-    link.href = `/posts/${encodeURIComponent(comment.slug)}.html`;
-    link.textContent = `查看文章：${comment.slug}`;
+    const momentId = comment.slug.startsWith("moment-") ? comment.slug.slice(7) : "";
+    link.href = momentId ? `/moments.html#${encodeURIComponent(momentId)}` : `/posts/${encodeURIComponent(comment.slug)}.html`;
+    link.textContent = momentId ? "查看朋友圈" : `查看文章：${comment.slug}`;
     link.target = "_blank";
     const remove = document.createElement("button");
     remove.type = "button";
