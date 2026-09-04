@@ -23,3 +23,10 @@ CREATE TABLE IF NOT EXISTS article_likes (
   created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
   PRIMARY KEY (slug, device_id)
 );
+
+CREATE TABLE IF NOT EXISTS article_views (
+  slug TEXT NOT NULL,
+  device_id TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+  PRIMARY KEY (slug, device_id)
+);

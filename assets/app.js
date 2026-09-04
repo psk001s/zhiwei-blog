@@ -191,21 +191,24 @@ async function updateViews(slug) {
     output.textContent = "128";
     return;
   }
-  const namespace = location.hostname.replace(/[^a-z0-9]/gi, "-");
+  const deviceKey = "zhiwei-comment-device";
+  let deviceId = localStorage.getItem(deviceKey);
+  if (!deviceId) {
+    deviceId = crypto.randomUUID();
+    localStorage.setItem(deviceKey, deviceId);
+  }
   try {
-    const response = await fetch(
-      `https://api.counterapi.dev/v1/${namespace}/${encodeURIComponent(slug)}/up`,
-    );
-    if (!response.ok) throw new Error("counter unavailable");
+    const response = await fetch("/api/views", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ slug, deviceId }),
+      cache: "no-store",
+    });
+    if (!response.ok) throw new Error("view counter unavailable");
     const data = await response.json();
-    output.textContent = Number(data.count ?? data.value ?? 0).toLocaleString(
-      "zh-CN",
-    );
+    output.textContent = Number(data.views || 0).toLocaleString("zh-CN");
   } catch {
-    const key = `zhiwei-views-${slug}`;
-    const count = Number(localStorage.getItem(key) || 0) + 1;
-    localStorage.setItem(key, String(count));
-    output.textContent = count.toLocaleString("zh-CN");
+    output.textContent = "--";
   }
 }
 
