@@ -24,16 +24,16 @@ collections:
     sortable_fields: [date, title, category]
     fields:
       - { label: 标题, name: title, widget: string }
-      - label: 正文
-        name: body
-        widget: markdown
-        buttons: [bold, italic, code, link, heading-two, heading-three, quote, bulleted-list, numbered-list]
       - label: 文章照片
         name: images
         widget: list
         required: false
         hint: 点击添加后直接从手机或电脑选择照片
         field: { label: 照片, name: image, widget: image, choose_url: false }
+      - label: 正文
+        name: body
+        widget: markdown
+        buttons: [bold, italic, code, link, heading-two, heading-three, quote, bulleted-list, numbered-list]
       - { label: 发布日期, name: date, widget: datetime, default: "{{now}}", date_format: YYYY-MM-DD, time_format: false }
       - { label: 分类, name: category, widget: string, default: 随笔, hint: 可直接输入已有分类或创建新分类 }
       - { label: 封面图片, name: cover, widget: image, choose_url: false, required: false }

@@ -60,7 +60,7 @@ if (existsSync(sourceDir)) {
     const legacySlug = file.replace(/\.md$/, "");
     const photos = (Array.isArray(data.images) ? data.images : []).filter(Boolean);
     const photoContent = photos.map((source, index) => `<figure><img src="${escapeAttribute(source)}" alt="文章图片 ${index + 1}" loading="lazy"></figure>`).join("");
-    posts.push({ slug, legacySlug, url: `posts/${slug}.html`, title: data.title, category, tags, date, readTime: `${Math.max(1, Math.ceil(body.length / 500))} 分钟`, summary: data.summary || "", cover: data.cover || "", content: markdown(body) + photoContent });
+    posts.push({ slug, legacySlug, url: `posts/${slug}.html`, title: data.title, category, tags, date, readTime: `${Math.max(1, Math.ceil(body.length / 500))} 分钟`, summary: data.summary || "", cover: data.cover || "", content: photoContent + markdown(body) });
   }
 }
 posts.sort((a, b) => b.date.localeCompare(a.date));
