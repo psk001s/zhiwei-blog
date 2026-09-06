@@ -70,12 +70,16 @@ if (existsSync(momentsDir)) {
   for (const file of files) {
     const { data, body } = frontmatter(await readFile(path.join(momentsDir, file), "utf8"));
     if (data.draft === true) continue;
+    const inlineImages = [...body.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)].map(match => match[1]);
+    const listedImages = Array.isArray(data.images) ? data.images : [];
+    const images = [...new Set([...listedImages, ...inlineImages])].filter(Boolean).slice(0, 9);
+    const textBody = body.replace(/!\[[^\]]*\]\([^)]+\)/g, "").trim();
     moments.push({
       id: file.replace(/\.md$/, ""),
       date: data.date || file.slice(0, 16),
       location: data.location || "",
-      images: Array.isArray(data.images) ? data.images.filter(Boolean) : [],
-      content: markdown(body)
+      images,
+      content: markdown(textBody)
     });
   }
 }

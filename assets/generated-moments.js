@@ -3,15 +3,19 @@ window.BLOG_MOMENTS = [
     "id": "2026-09-05-011559",
     "date": "2026-09-05 12:14",
     "location": "",
-    "images": [],
-    "content": "<figure><img src=\"/assets/images/uploads/ssss.png\" alt=\"\" loading=\"lazy\"><figcaption></figcaption></figure><p>小心一点，因为你不知道什么时候就被当做一个粉卖掉了</p>"
+    "images": [
+      "/assets/images/uploads/ssss.png"
+    ],
+    "content": "<p>小心一点，因为你不知道什么时候就被当做一个粉卖掉了</p>"
   },
   {
     "id": "2026-08-31-131227",
     "date": "2026-08-31 21:11",
     "location": "",
-    "images": [],
-    "content": "<figure><img src=\"/assets/images/uploads/IMG_3307.jpeg\" alt=\"\" loading=\"lazy\"><figcaption></figcaption></figure><p>今日运动</p>"
+    "images": [
+      "/assets/images/uploads/IMG_3307.jpeg"
+    ],
+    "content": "<p>今日运动</p>"
   },
   {
     "id": "2026-08-30-131015",
