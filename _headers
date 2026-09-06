@@ -6,3 +6,6 @@
 
 /assets/site-config.js
   Cache-Control: no-cache, no-store, must-revalidate
+
+/admin/config.yml
+  Cache-Control: no-cache, no-store, must-revalidate

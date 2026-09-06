@@ -24,10 +24,19 @@ collections:
     sortable_fields: [date, title, category]
     fields:
       - { label: 标题, name: title, widget: string }
-      - { label: 正文, name: body, widget: markdown }
+      - label: 正文
+        name: body
+        widget: markdown
+        buttons: [bold, italic, code, link, heading-two, heading-three, quote, bulleted-list, numbered-list]
+      - label: 文章照片
+        name: images
+        widget: list
+        required: false
+        hint: 点击添加后直接从手机或电脑选择照片
+        field: { label: 照片, name: image, widget: image, choose_url: false }
       - { label: 发布日期, name: date, widget: datetime, default: "{{now}}", date_format: YYYY-MM-DD, time_format: false }
       - { label: 分类, name: category, widget: string, default: 随笔, hint: 可直接输入已有分类或创建新分类 }
-      - { label: 封面图片, name: cover, widget: image, choose_url: true, required: false }
+      - { label: 封面图片, name: cover, widget: image, choose_url: false, required: false }
       - { label: 草稿, name: draft, widget: boolean, default: false, required: false }
   - name: moments
     label: 朋友圈
@@ -43,7 +52,7 @@ collections:
     summary: "{{date}} · {{body}}"
     sortable_fields: [date]
     fields:
-      - { label: 内容, name: body, widget: markdown }
+      - { label: 内容, name: body, widget: text }
       - { label: 发布时间, name: date, widget: datetime, default: "{{now}}", date_format: YYYY-MM-DD, time_format: "HH:mm" }
       - { label: 位置, name: location, widget: string, required: false }
       - label: 图片
@@ -52,7 +61,7 @@ collections:
         required: false
         max: 9
         hint: 最多上传 9 张图片，网站会按九宫格显示
-        field: { label: 图片, name: image, widget: image }
+        field: { label: 照片, name: image, widget: image, choose_url: false }
       - { label: 草稿, name: draft, widget: boolean, default: false, required: false }
   - name: settings
     label: 网站设置

@@ -58,7 +58,9 @@ if (existsSync(sourceDir)) {
     const tags = String(data.tags || category).split(/[,，|]/).map(tag => tag.trim()).filter(Boolean);
     const slug = String(posts.length + 1);
     const legacySlug = file.replace(/\.md$/, "");
-    posts.push({ slug, legacySlug, url: `posts/${slug}.html`, title: data.title, category, tags, date, readTime: `${Math.max(1, Math.ceil(body.length / 500))} 分钟`, summary: data.summary || "", cover: data.cover || "", content: markdown(body) });
+    const photos = (Array.isArray(data.images) ? data.images : []).filter(Boolean);
+    const photoContent = photos.map((source, index) => `<figure><img src="${escapeAttribute(source)}" alt="文章图片 ${index + 1}" loading="lazy"></figure>`).join("");
+    posts.push({ slug, legacySlug, url: `posts/${slug}.html`, title: data.title, category, tags, date, readTime: `${Math.max(1, Math.ceil(body.length / 500))} 分钟`, summary: data.summary || "", cover: data.cover || "", content: markdown(body) + photoContent });
   }
 }
 posts.sort((a, b) => b.date.localeCompare(a.date));
