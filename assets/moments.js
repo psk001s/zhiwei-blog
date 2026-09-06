@@ -47,19 +47,21 @@ document.addEventListener("DOMContentLoaded", () => {
     content.className = "moment-content";
     content.innerHTML = moment.content;
     article.append(meta, content);
-    if (moment.images?.length) {
+    const momentImages = moment.images?.slice(0, 9) || [];
+    if (momentImages.length) {
       const gallery = document.createElement("div");
-      gallery.className = `moment-gallery count-${Math.min(moment.images.length, 4)}`;
-      gallery.append(...moment.images.map((source, index) => {
-        const link = document.createElement("a");
-        link.href = source;
-        link.target = "_blank";
-        link.rel = "noopener";
+      gallery.className = `moment-gallery count-${momentImages.length}`;
+      gallery.append(...momentImages.map((source, index) => {
+        const link = document.createElement("button");
+        link.type = "button";
+        link.className = "moment-photo";
+        link.setAttribute("aria-label", `查看第 ${index + 1} 张图片`);
         const image = document.createElement("img");
         image.src = source;
         image.alt = `朋友圈图片 ${index + 1}`;
         image.loading = "lazy";
         link.append(image);
+        link.addEventListener("click", () => openLightbox(momentImages, index));
         return link;
       }));
       article.append(gallery);
@@ -147,4 +149,35 @@ document.addEventListener("DOMContentLoaded", () => {
     return article;
   }));
   if (window.lucide) window.lucide.createIcons();
+
+  function openLightbox(images, startIndex) {
+    let index = startIndex;
+    const dialog = document.createElement("dialog");
+    dialog.className = "moment-lightbox";
+    dialog.innerHTML = `<button class="lightbox-close" type="button" aria-label="关闭"><i data-lucide="x"></i></button><button class="lightbox-prev" type="button" aria-label="上一张"><i data-lucide="chevron-left"></i></button><figure><img alt=""><figcaption></figcaption></figure><button class="lightbox-next" type="button" aria-label="下一张"><i data-lucide="chevron-right"></i></button>`;
+    const image = dialog.querySelector("img");
+    const caption = dialog.querySelector("figcaption");
+    const previous = dialog.querySelector(".lightbox-prev");
+    const next = dialog.querySelector(".lightbox-next");
+    const show = nextIndex => {
+      index = (nextIndex + images.length) % images.length;
+      image.src = images[index];
+      image.alt = `朋友圈大图 ${index + 1}`;
+      caption.textContent = `${index + 1} / ${images.length}`;
+    };
+    previous.hidden = next.hidden = images.length < 2;
+    previous.addEventListener("click", () => show(index - 1));
+    next.addEventListener("click", () => show(index + 1));
+    dialog.querySelector(".lightbox-close").addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", event => { if (event.target === dialog) dialog.close(); });
+    dialog.addEventListener("keydown", event => {
+      if (event.key === "ArrowLeft") show(index - 1);
+      if (event.key === "ArrowRight") show(index + 1);
+    });
+    dialog.addEventListener("close", () => dialog.remove());
+    document.body.append(dialog);
+    show(index);
+    dialog.showModal();
+    if (window.lucide) window.lucide.createIcons();
+  }
 });

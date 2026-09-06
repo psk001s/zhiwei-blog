@@ -50,6 +50,8 @@ collections:
         name: images
         widget: list
         required: false
+        max: 9
+        hint: 最多上传 9 张图片，网站会按九宫格显示
         field: { label: 图片, name: image, widget: image }
       - { label: 草稿, name: draft, widget: boolean, default: false, required: false }
   - name: settings
